@@ -1,1 +1,5 @@
-siv-texture
+## Signal, Image and Video - Analysis of Fabric Textures project
+
+The objective of the project was to develop a small module to be included in a broader tool that could be used by future students in the laboratory lessons of the Signal, Image and Video course. This tool aims to permit a graphical building of elaboration chains for signals, using blocks with predefined inputs and outputs.
+
+The topic identified for this module development was the analysis and synthesis of fabric textures, specifically on statistical models. The identified techniques of **Autocorrelation Function**, **Local Binary Patterns** and **Co-Occurrence Matrices** should have been used to extract their relative parameters as outputs from an input image. These parameters will be used by future works to identify defects or synthesize a texture.
