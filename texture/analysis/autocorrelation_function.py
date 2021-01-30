@@ -43,18 +43,12 @@ class ACF:
         Returns:
             (np.ndarray): The ACF matrix
         """
-        # Matrix with repeated pixels
-        rpt_pixels = np.tile(pixels, (2, 2))  # Repeated pixels
-        # Real FFT with a padding of zeros, because acf spans on a doubled size
-        pixels_freq = np.fft.rfft2(pixels, rpt_pixels.shape)
-        # Real FFT with on the matrix with repeated pixels
-        rpt_pixels_freq = np.fft.rfft2(rpt_pixels)
+        # Real FFT on pixels
+        pixels_freq = np.fft.rfft2(pixels)
         # Autocorrelation in the frequency domain
-        acf_freq = np.multiply(rpt_pixels_freq, pixels_freq.conj())
-        # Going back to the space domain with the inverse FFT
-        acf = np.fft.irfft2(acf_freq, rpt_pixels.shape)
-        # Removing redundancy, keeping only positive shifts
-        acf = acf[:pixels.shape[0], :pixels.shape[1]]
+        acf_freq = pixels_freq * pixels_freq.conj()
+        # Going back to the space domain with the inverse real FFT, in the original shape
+        acf = np.fft.irfft2(acf_freq, pixels.shape)
         # Imaginary part already removed by conjugate multiplication, casting again to integers
         return np.rint(acf)
 
@@ -71,7 +65,7 @@ class ACF:
         """
         pixels = pixels.astype(np.float64)  # Convert to avoid overflows
         dim = pixels.shape[0], pixels.shape[1]
-        acf = [[np.sum(pixels * np.roll(pixels, (-n, -m), (0, 1))) for m in range(0, dim[1])] for n in range(0, dim[0])]
+        acf = [[np.sum(pixels * np.roll(pixels, (-m, -n), (0, 1))) for n in range(0, dim[1])] for m in range(0, dim[0])]
         return np.array(acf)
 
     def _mean_values(self) -> (float, float):

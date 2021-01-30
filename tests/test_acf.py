@@ -54,13 +54,10 @@ class MyTestCase(unittest.TestCase):
         # 3 4 1  to  52 40 52
         # 0 2 3      52 52 40
         mtx = np.array([[1, 5, 2], [3, 4, 1], [0, 2, 3]])
-        rep_mtx = np.tile(mtx, (2, 2))  # Repeated matrix
-        # Real FFT on matrix padded zeros, same shape of the repeated
-        mtx_ft = np.fft.rfft2(mtx, rep_mtx.shape)
-        # Real FFT on matrix padded with repetitions of itself
-        rep_mtx_ft = np.fft.rfft2(rep_mtx)
+        # Real FFT on matrix
+        mtx_ft = np.fft.rfft2(mtx)
         # Pairwise multiplication and inverse transform
-        corr = np.fft.irfft2(rep_mtx_ft * mtx_ft.conj(), rep_mtx.shape)
+        corr = np.fft.irfft2(mtx_ft * mtx_ft.conj(), mtx.shape)
         # Removing redundancy, keeping only positive part
         corr = corr[:mtx.shape[0], :mtx.shape[1]]
         # Imaginary part already removed, casting again to integers
@@ -73,10 +70,6 @@ class MyTestCase(unittest.TestCase):
         # 3 4 1  to  52 40 52
         # 0 2 3      52 52 40
         image = Image.fromarray(np.array([[1, 5, 2], [3, 4, 1], [0, 2, 3]]))
-        mtx = np.array(image)
-        n_dim = mtx.shape[0]
-        m_dim = mtx.shape[1]
-        print([[np.sum(mtx * np.roll(mtx, (-n, -m), (0, 1))) for m in range(0, m_dim)] for n in range(0, n_dim)])
         acf = ACF(image)
         expected_result = np.array([[69., 42., 42.], [52., 40., 52.], [52., 52., 40.]]) / 69
         self.assertEqual(acf.matrix.tolist(), expected_result.tolist())
@@ -98,13 +91,13 @@ class MyTestCase(unittest.TestCase):
         acf_4x4 = ACF(im_4x4)
         acf_8x8 = ACF(im_8x8)
         acf_16x16 = ACF(im_16x16)
-        plt.plot(acf_4x4.matrix[0])
-        plt.plot(acf_8x8.matrix[0])
-        plt.plot(acf_16x16.matrix[0])
-        plt.legend(['4x4', '8x8', '16x16'])
-        plt.xlabel('m')
-        plt.ylabel('ACF')
-        plt.show()
+        # plt.plot(acf_4x4.matrix[0])
+        # plt.plot(acf_8x8.matrix[0])
+        # plt.plot(acf_16x16.matrix[0])
+        # plt.legend(['4x4', '8x8', '16x16'])
+        # plt.xlabel('m')
+        # plt.ylabel('ACF')
+        # plt.show()
         self.assertEqual(acf_4x4.directional_memory(), (32, 32))
         self.assertEqual(acf_8x8.directional_memory(), (16, 16))
         self.assertEqual(acf_16x16.directional_memory(), (8, 8))
