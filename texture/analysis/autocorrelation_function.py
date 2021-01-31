@@ -118,7 +118,7 @@ class ACF:
         Function to computed the profile spreads, equivalent to call moment(2, 0), moment(0, 2).
 
         Returns:
-            M_20, M_01 (float, float): the profile spreads of the ACF
+            M_20, M_02 (float, float): the profile spreads of the ACF
         """
         return self.moment(2, 0), self.moment(0, 2)
 
