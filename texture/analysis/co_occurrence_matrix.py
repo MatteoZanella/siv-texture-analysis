@@ -89,6 +89,20 @@ class CoOccur:
         """Returns the spread on all angles, for all distances and levels"""
         return np.max(self.matrices, axis=1) - np.min(self.matrices, axis=1)
 
+    def matrix_of(self, distance: float, angle: float) -> np.ndarray:
+        """
+        Method to get a matrix from the co-occurrence matrices, relying directly on distance and angle instead
+        of their indexes
+
+        Args:
+            distance (float): The distance of the direction
+            angle (float): The angle of the direction, expressed in degrees
+
+        Returns:
+           (np.ndarray): The co-occurrence matrix
+        """
+        return self.matrices[self._idx_of_dist[distance], self._idx_of_angle[angle]]
+
     def inertia_of(self, distance: float, angle: float) -> float:
         """
         Method to get a value from the inertia matrix, relying directly on distance and angle instead of their indexes
