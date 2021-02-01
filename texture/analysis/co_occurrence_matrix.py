@@ -20,8 +20,8 @@ class CoOccur:
 
     Args:
         image (PIL.Image): The image that has to be analyzed, it is internally converted in B/W with Image.convert('L')
-        distances (Sequence[float]): The sequence of analyzed distances. Default: range(1, 12, 2)
-        angles (Sequence[float]): The sequence of analyzed angles expressed in degrees. Default: range(0, 360, 45)
+        distances (Sequence[float]): The sequence of analyzed distances. Default: range(1, 16, 2)
+        angles (Sequence[float]): The sequence of analyzed angles expressed in degrees. Default: range(90, -90, -45)
         levels (int): Pixel values are quantized in this number of levels. Should be lower than 256. Default: 8
     Attributes:
         matrices (numpy.ndarray): Co-Occurrence matrices, of shape (len(distances), len(angles), levels, levels)
@@ -31,8 +31,8 @@ class CoOccur:
         distances (numpy.ndarray): Array of all analyzed distances
         angles (numpy.ndarray): Array of all analyzed angles
     """
-    def __init__(self, image: Image, distances: Sequence[float] = range(1, 12, 2),
-                 angles: Sequence[float] = range(0, 360, 45), levels: int = 8):
+    def __init__(self, image: Image, distances: Sequence[float] = range(1, 16, 2),
+                 angles: Sequence[float] = range(90, -90, -45), levels: int = 8):
         # ===Image quantization===
         pixels = np.array(image.convert('L'))  # pixels.dtype == np.uint8
         pixels = np.floor(pixels / 256 * levels).astype(np.uint8)  # quantized in the [0, levels) integer range
