@@ -67,7 +67,6 @@ class LBP:
     def _local_binary_patterns(self, pixels: np.ndarray, distance: int) -> np.ndarray:
         """Returns the Local Binary Patters matrix of the given pixels"""
         # # The dtype of the lbp_matrix follows the maximum size of the integers it can contain. Defaults to uint8
-        # lbp_matrix = np.empty(pixels.shape, self._best_dtype(self.histogram_bins))
         # The pixel matrix is padded with with zeros so neighbors of pixels placed in the borders can be referenced
         padded_pixels = np.pad(pixels, distance, constant_values=0)
         # Compute the 3D matrix holding all neighbors for each position
