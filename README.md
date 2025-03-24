@@ -1,5 +1,44 @@
-## Signal, Image and Video - Analysis of Fabric Textures project
+# Fabric Texture Analysis Toolkit
+This Python toolkit is designed for advanced fabric texture analysis using statistical methods, enabling the extraction and examination of texture features. Intended for integration into a larger tool, it will be used by students in the _Signal, Image and Video course_ to visually create signal processing workflows. The module emphasizes clear documentation and a user-friendly interface, ensuring seamless integration and ease of use in future educational settings.
 
-The objective of the project was to develop a small module to be included in a broader tool that could be used by future students in the laboratory lessons of the Signal, Image and Video course. This tool aims to permit a graphical building of elaboration chains for signals, using blocks with predefined inputs and outputs.
+## Texture Analysis Techniques
+- Autocorrelation Function (ACF)
+- Local Binary Patterns (LBP)
+- Co-Occurrence Matrices (CoOccur)
 
-The topic identified for this module development was the analysis and synthesis of fabric textures, specifically on statistical models. The identified techniques of **Autocorrelation Function**, **Local Binary Patterns** and **Co-Occurrence Matrices** should have been used to extract their relative parameters as outputs from an input image. These parameters will be used by future works to identify defects or synthesize a texture.
+## Installation and Usage
+
+1. Clone the repository in your project
+  ```bash
+  git clone https://github.com/MatteoZanella/siv-texture-analysis.git
+  ```
+2. Install the requirements
+  ```bash
+  cd siv-texture-analysis
+  pip install -r requirements.txt
+  ```
+3. Import the modules in your code
+```python
+from texture.analysis import ACF, CoOccur, LBP
+from PIL import Image
+
+# Load an image
+image = Image.open('./tests/textures/lena.png')
+
+# Compute Autocorrelation Function
+acf = ACF(image)
+
+# Compute Local Binary Patterns
+lbp = LBP(image)
+
+# Compute Co-Occurrence Matrices
+com = CoOccur(image)
+```
+
+## Running Tests
+To run the test suite, use Python's unittest module:
+```bash
+# Run all tests
+python -m unittest discover -s tests
+```
+
